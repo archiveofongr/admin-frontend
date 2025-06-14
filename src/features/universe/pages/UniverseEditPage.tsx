@@ -54,11 +54,11 @@ export default function UniverseEditPage() {
   });
 
   const [tags, setTags] = useState("");
-  // const [showInnerImgEdit, setShowInnerImgEdit] = useState<{ show: boolean, type: SaveTargetType, id: number }>({
-  //   show: false,
-  //   type: null,
-  //   id: -1
-  // });
+  const [showInnerImgEdit, setShowInnerImgEdit] = useState<{ show: boolean, type: SaveTargetType, id: number }>({
+    show: false,
+    type: null,
+    id: -1
+  });
   const [showThumbMusicEdit, setShowThumbMusicEdit] = useState(false);
   const [showAuthorEdit, setShowAuthorEdit] = useState(false);
   const [alert, setAlert] = useState<{
@@ -208,14 +208,6 @@ export default function UniverseEditPage() {
     setShowInnerImgEdit({ show: true, type: type, id: id });
   }
 
-  const modalOKClick = () => {
-    if (alert != null && alert.type === "check") {
-      navigate(-1);
-    } else {
-      setAlert(null);
-    }
-  }
-
   return (
     <PageLayout>
       {alert && (
@@ -223,7 +215,7 @@ export default function UniverseEditPage() {
           text={alert.text}
           type={alert.type}
           onClose={() => setAlert(null)}
-          okButton={<Button label="확인" onClick={modalOKClick} />}
+          okButton={<Button label="확인" onClick={() => { alert.type === "check" ? navigate(-1) : setAlert(null) }} />}
           cancelButton={
             alert.type === "check" ? <Button label="취소" variant="gray" onClick={() => setAlert(null)} /> : undefined
           }
@@ -308,7 +300,7 @@ export default function UniverseEditPage() {
         </div>
       </section>
 
-      {/* {showInnerImgEdit.show && (
+      {showInnerImgEdit.show && (
         <ImageUploadModal
           title="이미지 수정"
           description="내부 이미지를 변경할 수 있습니다."
@@ -321,7 +313,7 @@ export default function UniverseEditPage() {
           confirmText="저장"
           requireSquare
         />
-      )} */}
+      )}
 
       {showThumbMusicEdit && (
         <ThumbMusicEditModal
